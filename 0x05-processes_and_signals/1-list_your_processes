@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # displays currently running processes of root in user-oriented format
 
-ps axuf
+ps auxf
