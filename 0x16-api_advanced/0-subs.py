@@ -1,16 +1,18 @@
 #!/usr/bin/python3
-"returns the number of subscribers"
+# get subs
+from requests import get
+from sys import argv
+
 
 def number_of_subscribers(subreddit):
-    """Queries the Reddit API and returns the number of subscribers
-    to the subreddit"""
-    import requests
-
-    sub_info = requests.get("https://www.reddit.com/r/{}/about.json"
-                            .format(subreddit),
-                            headers={"User-Agent": "My-User-Agent"},
-                            allow_redirects=False)
-    if sub_info.status_code >= 300:
+    """subs"""
+    head = {'User-Agent': 'Dan Kazam'}
+    count = get('https://www.reddit.com/r/{}/about.json'.format(
+        subreddit), headers=head).json()
+    try:
+        return count.get('data').get('subscribers')
+    except:
         return 0
 
-    return sub_info.json().get("data").get("subscribers")
+if __name__ == "__main__":
+    number_of_subscribers(argv[1])
